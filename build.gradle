@@ -55,4 +55,19 @@ allprojects {
         }
     }
 }
+//Настройка задачи Javadoc
+tasks.javadoc {
+    source = sourceSets.main.allJava
+    classpath += sourceSets.main.output
+    destinationDir = file("$buildDir/docs/javadoc")
+}
 
+// Описание сборки jar
+jar {
+    archiveBaseName.set("game")
+    archiveVersion.set(version)
+    archiveClassifier.set("")
+}
+
+// Обновляем сборку так, чтобы Javadoc был собран
+build.dependsOn tasks.javadoc
