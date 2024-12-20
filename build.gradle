@@ -1,9 +1,28 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 repositories {
     mavenCentral()
+}
+
+jacoco {
+    toolVersion = "0.8.8"  // Укажите версию плагина JaCoCo
+}
+
+jacocoTestReport {
+    dependsOn test // Зависит от задачи test
+    reports {
+        xml.required = false // Отключаем вывод в XML
+        csv.required = false // Отключаем вывод в CSV
+        html.required = true  // Включаем HTML отчеты
+    }
+}
+
+// Задача для сборки отчета о покрытии
+tasks.withType(Test) {
+    finalizedBy jacocoTestReport  // После тестов создаем отчет о покрытии
 }
 
 dependencies {
